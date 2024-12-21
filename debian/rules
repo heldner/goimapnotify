@@ -3,6 +3,9 @@
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 export DEB_BUILD_OPTIONS = noautodbgsym
 
+GOPATH := $(PWD)/gocode
+export GOPATH
+
 SHELL := sh -e
 VERSION ?= 2.4
 
@@ -17,6 +20,7 @@ goimapnotify:
 	git clone --depth 1 --branch $(VERSION) https://gitlab.com/shackra/goimapnotify
 
 override_dh_auto_build: goimapnotify
+	[ -d $(GOPATH) ] || mkdir $(GOPATH)
 	$(MAKE) -C goimapnotify
 	pandoc --standalone --to man goimapnotify1.md -o goimapnotify.1
 	gzip goimapnotify.1
