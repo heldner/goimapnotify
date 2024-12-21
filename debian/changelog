@@ -1,0 +1,7 @@
+goimapnotify (2.4-2) stable; urgency=low
+
+  * goimapnotify 2.4
+  * debian:
+    - first release
+
+ -- Stanislav Korolev <stan.korolev@mail.ru>  Sat, 21 Dec 2024 13:54:12 +0300
