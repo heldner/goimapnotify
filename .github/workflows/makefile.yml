@@ -1,0 +1,34 @@
+---
+name: Makefile CI
+
+on:
+  push:
+    tags:
+      - "*.*"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Build with docker
+      uses: addnab/docker-run-action@v3
+      with:
+        image: debian:bookworm-slim
+        options: -v ${{ github.workspace }}:/github/workspace -w /github/workspace
+        run: |
+          apt update
+          apt install --no-install-recommends -y curl devscripts equivs \
+            fakeroot build-essential debhelper
+          yes | mk-build-deps --install debian/control
+          VERSION=${{ github.ref_name }} fakeroot debian/rules binary
+          mv ../goimapnotify_${{ github.ref_name }}-*_amd64.deb .
+
+    - name: Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: goimapnotify_${{ github.ref_name }}-*_amd64.deb
+        body_path: ${{ github.workspace }}/debian/changelog
