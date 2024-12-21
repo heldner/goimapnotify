@@ -4,6 +4,7 @@ Priority: optional
 Maintainer: Stanislav Korlev <stan.korolev@mail.ru>
 Build-Depends: debhelper-compat (= 13),
                pandoc,
+               golang,
                dpkg-dev (>= 1.16.1.1)
 Standards-Version: 4.6.2
 Homepage: https://tools.suckless.org/goimapnotify/
