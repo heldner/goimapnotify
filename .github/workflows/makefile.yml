@@ -21,7 +21,7 @@ jobs:
         options: -v ${{ github.workspace }}:/github/workspace -w /github/workspace
         run: |
           apt update
-          apt install --no-install-recommends -y curl devscripts equivs \
+          apt install --no-install-recommends -y git devscripts equivs \
             fakeroot build-essential debhelper
           yes | mk-build-deps --install debian/control
           VERSION=${{ github.ref_name }} fakeroot debian/rules binary
