@@ -20,9 +20,11 @@ jobs:
         image: debian:bookworm-slim
         options: -v ${{ github.workspace }}:/github/workspace -w /github/workspace
         run: |
+          echo 'deb http://deb.debian.org/debian bookworm-backports main' \
+            > /etc/apt/sources.list.d/backports.list
           apt update
-          apt install --no-install-recommends -y git devscripts equivs \
-            fakeroot build-essential debhelper
+          apt install --no-install-recommends -t bookworm-backports -y git \
+            devscripts equivs fakeroot make debhelper golang
           yes | mk-build-deps --install debian/control
           VERSION=${{ github.ref_name }} fakeroot debian/rules binary
           mv ../goimapnotify_${{ github.ref_name }}-*_amd64.deb .
