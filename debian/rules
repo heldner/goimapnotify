@@ -1,6 +1,5 @@
 #!/usr/bin/make -f
 
-export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 export DEB_BUILD_OPTIONS = noautodbgsym
 
 GOPATH := $(PWD)/gocode
@@ -33,3 +32,6 @@ override_dh_auto_install:
 
 override_dh_dwz:
 	true
+
+override_dh_installsystemduser:
+	dh_installsystemduser --no-enable
